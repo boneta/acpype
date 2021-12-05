@@ -23,7 +23,7 @@ jobs:
          - name: Install OpenBabel Python Module and Hack it
            run: |
               if [ "$RUNNER_OS" == macOS ]; then
-                 echo >>>>>>SKIP macOS
+                 echo ">>>>>>SKIP macOS"
               elif [ "$RUNNER_OS" == "Linux" ]; then
                  sudo apt-get install --no-install-recommends -y python3-openbabel
                  echo ln -s /usr/lib/python3/dist-packages/openbabel $pythonLocation/lib/python${{ matrix.python-version }}/
