@@ -9,23 +9,22 @@ jobs:
       runs-on: ubuntu-latest
       strategy:
          matrix:
-         python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+            os: [ubuntu-latest]
+            python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
 
       steps:
+         - uses: actions/checkout@v2
 
-      -  uses: actions/checkout@v2
+         - name: Set up Python ${{ matrix.python-version }}
+           uses: actions/setup-python@v2
+           with:
+              python-version: ${{ matrix.python-version }}
 
-      -  name: Set up Python ${{ matrix.python-version }}
-         uses: actions/setup-python@v2
-         with:
-            python-version: ${{ matrix.python-version }}
-
-      -  name: Install OpenBabel Python Module and Hack it
-         run: |
-            if [ "$RUNNER_OS" == "macOs" ]; then
-               echo >>>>>>SKIP macOS
-            elif [ "$RUNNER_OS" == "Linux" ]; then
-               sudo apt-get install --no-install-recommends -y python3-openbabel
-               echo ln -s /usr/lib/python3/dist-packages/openbabel $pythonLocation/lib/python${{ matrix.python-version }}/
-            fi
-
+         - name: Install OpenBabel Python Module and Hack it
+           run: |
+              if [ "$RUNNER_OS" == macOS ]; then
+                 echo >>>>>>SKIP macOS
+              elif [ "$RUNNER_OS" == "Linux" ]; then
+                 sudo apt-get install --no-install-recommends -y python3-openbabel
+                 echo ln -s /usr/lib/python3/dist-packages/openbabel $pythonLocation/lib/python${{ matrix.python-version }}/
+              fi
